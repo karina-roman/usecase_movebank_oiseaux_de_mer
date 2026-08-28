@@ -159,9 +159,6 @@ def render_sidebar(all_individuals: Iterable[str], min_date: date, max_date: dat
 
             st.caption("Détection exploratoire : une zone indique une concentration de positions lentes, pas une preuve directe d'alimentation.")
 
-        if not mapbox_token:
-            st.caption("Pour activer le fond satellite, définissez `MAPBOX_TOKEN` dans `.streamlit/secrets.toml` en local ou comme variable d'environnement sur la plateforme de déploiement.")
-
     return {
         "selected_individuals": selected_individuals,
         "selected_dates": selected_dates,
