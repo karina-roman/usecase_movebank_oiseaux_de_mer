@@ -1,6 +1,8 @@
 # Chargement, nettoyage, filtrage et synthèses générales des données
 
 import os
+from io import BytesIO
+import requests
 from datetime import date
 from pathlib import Path
 from typing import Dict, Iterable, Tuple
@@ -10,6 +12,38 @@ import pandas as pd
 import streamlit as st
 
 import config as cfg
+
+
+def read_csv_source(source: str) -> pd.DataFrame:
+    """Lit un CSV local ou téléchargé depuis une URL."""
+
+    if source.startswith(("http://", "https://")):
+        response = requests.get(
+            source,
+            timeout=120,
+            allow_redirects=True,
+            headers={"User-Agent": "CAP-IA-dashboard/1.0"},
+        )
+        response.raise_for_status()
+
+        beginning = response.content[:500].lstrip().lower()
+        content_type = response.headers.get("Content-Type", "").lower()
+
+        if (
+            not response.content
+            or "text/html" in content_type
+            or "application/json" in content_type
+            or b"<html" in beginning
+            or b"<!doctype html" in beginning
+        ):
+            raise ValueError(f"DATA_URL ne renvoie pas un fichier CSV valide. Type de contenu reçu : {content_type or 'inconnu'}")
+
+        return pd.read_csv(
+            BytesIO(response.content),
+            low_memory=False,
+        )
+
+    return pd.read_csv(source, low_memory=False)
 
 
 def find_data_file() -> str:
@@ -42,7 +76,7 @@ def find_data_file() -> str:
 def load_and_prepare_data(path: str) -> Tuple[pd.DataFrame, Dict[str, int]]:
     """Charge, nettoie et enrichit les positions avec les métriques de mouvement."""
 
-    data = pd.read_csv(path, low_memory=False)
+    data = read_csv_source(path)
     raw_row_count = len(data)
 
     required_columns = {
