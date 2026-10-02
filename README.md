@@ -136,7 +136,6 @@ Le projet est organisé de manière à séparer la logique de traitement des don
 - `src/movebank_seabirds/visualization/` : génération des graphiques et des cartes
 - `src/movebank_seabirds/ui/` : composants de l'interface Streamlit
 - `data/` : données utilisées par l'application
-- `tests/` : tests unitaires des principales fonctions du projet
 
 ### `app.py` - orchestration
 
@@ -170,7 +169,7 @@ Les constantes sont importées dans les autres modules avec :
 import config as cfg
 ```
 
-### `data_processing.py` - chargement et préparation
+### `data/processing.py` - chargement et préparation
 
 | Fonction | Responsabilité |
 |---|---|
@@ -180,7 +179,7 @@ import config as cfg
 | `filter_trajectories()` | filtre les individus et les dates, puis prépare les segments valides |
 | `build_individual_summary()` | calcule la synthèse statistique par individu |
 
-### `movement_analysis.py` - analyses temporelles et comportementales
+### `analysis/movement.py` - analyses temporelles et comportementales
 
 | Fonction | Responsabilité |
 |---|---|
@@ -191,7 +190,7 @@ import config as cfg
 | `build_movement_signature_histogram()` | agrège la vitesse et l’angle de rotation dans une grille bidimensionnelle |
 | `estimate_typical_interval_minutes()` | estime le pas GPS médian utilisé pour calculer la durée des visites |
 
-### `foraging_analysis.py` - détection des zones alimentaires
+### `analysis/foraging.py` - détection des zones alimentaires
 
 | Fonction | Responsabilité |
 |---|---|
@@ -205,7 +204,7 @@ import config as cfg
 
 La fonction privée `_empty_zone_summary()` crée la structure d’un tableau de zones vide.
 
-### `maps.py` - cartes Plotly
+### `visualization/maps.py` - cartes Plotly
 
 | Fonction | Responsabilité |
 |---|---|
@@ -215,7 +214,7 @@ La fonction privée `_empty_zone_summary()` crée la structure d’un tableau de
 
 Les fonctions privées `_map_center()`, `_french_integer()` et `_add_foraging_zone_layers()` sont des fonctions internes utilisées uniquement pour construire les cartes.
 
-### `charts.py` - figures Plotly
+### `visualization/charts.py` - figures Plotly
 
 Chaque fonction retourne un objet `plotly.graph_objects.Figure` sans l’afficher directement.
 
@@ -230,7 +229,7 @@ Chaque fonction retourne un objet `plotly.graph_objects.Figure` sans l’affiche
 | `build_zone_timeline_figure()` | chronologie des visites par individu |
 | `build_detection_space_figure()` | espace de sélection des positions candidates |
 
-### `ui_components.py` - interface Streamlit
+### `ui/components.py` - interface Streamlit
 
 | Fonction | Responsabilité |
 |---|---|
@@ -246,13 +245,13 @@ Chaque fonction retourne un objet `plotly.graph_objects.Figure` sans l’affiche
 
 ## Bibliothèques utilisées
 
-| Bibliothèque | Version minimale | Utilisation |
+| Bibliothèque | Version | Utilisation |
 |---|---:|---|
-| [Streamlit](https://streamlit.io/) | 1.31 | interface, filtres, onglets, cache et affichage du dashboard |
-| [pandas](https://pandas.pydata.org/) | 2.0 | chargement, nettoyage, regroupements et tableaux |
-| [NumPy](https://numpy.org/) | 1.24 | calculs vectorisés, trigonométrie, histogrammes et Haversine |
-| [Plotly](https://plotly.com/python/) | 5.18 | cartes et graphiques interactifs |
-| [scikit-learn](https://scikit-learn.org/) | 1.3 | clustering DBSCAN des positions candidates |
+| [Streamlit](https://streamlit.io/) | 1.64.0 | interface, filtres, onglets, cache et affichage du dashboard |
+| [pandas](https://pandas.pydata.org/) | 3.0.6 | chargement, nettoyage, regroupements et tableaux |
+| [NumPy](https://numpy.org/) | 2.5.3 | calculs vectorisés, trigonométrie, histogrammes et Haversine |
+| [Plotly](https://plotly.com/python/) | 7.1.0 | cartes et graphiques interactifs |
+| [scikit-learn](https://scikit-learn.org/) | 1.9.1 | clustering DBSCAN des positions candidates |
 
 ## Installation avec Python
 
