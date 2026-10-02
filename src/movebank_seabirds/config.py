@@ -4,7 +4,7 @@ from pathlib import Path
 
 
 APP_DIR = Path(__file__).resolve().parent
-FILE_NAME = "FTZ_ Foraging_in_lesser_black-backed_gulls.csv"
+FILE_NAME = "FTZ_Foraging_in_lesser_black-backed_gulls.csv"
 
 ID_COLUMN = "tag-local-identifier"
 TIME_COLUMN = "timestamp"

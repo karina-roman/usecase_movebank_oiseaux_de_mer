@@ -38,10 +38,7 @@ def read_csv_source(source: str) -> pd.DataFrame:
         ):
             raise ValueError(f"DATA_URL ne renvoie pas un fichier CSV valide. Type de contenu reçu : {content_type or 'inconnu'}")
 
-        return pd.read_csv(
-            BytesIO(response.content),
-            low_memory=False,
-        )
+        return pd.read_csv(BytesIO(response.content), low_memory=False,)
 
     return pd.read_csv(source, low_memory=False)
 

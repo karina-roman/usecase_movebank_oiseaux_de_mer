@@ -13,7 +13,7 @@ import pandas as pd
 import config as cfg
 
 # Importations fonctions
-from charts import (
+from visualization.charts import (
     build_daily_distance_figure,
     build_detection_space_figure,
     build_excursion_figure,
@@ -22,14 +22,14 @@ from charts import (
     build_zone_reuse_figure,
     build_zone_timeline_figure,
 )
-from data_processing import (
+from data.processing import (
     build_individual_summary,
     filter_trajectories,
     find_data_file,
     load_and_prepare_data,
     normalize_date_range,
 )
-from foraging_analysis import (
+from analysis.foraging import (
     build_detection_histogram,
     build_heat_grid,
     build_method_zone_table,
@@ -38,15 +38,15 @@ from foraging_analysis import (
     empty_foraging_stats,
     select_displayed_zones,
 )
-from maps import build_foraging_map, build_map_config, build_trajectory_map
-from movement_analysis import (
+from visualization.maps import build_foraging_map, build_map_config, build_trajectory_map
+from analysis.movement import (
     build_daily_distance,
     build_excursion_summary,
     build_hourly_summary,
     build_movement_signature_histogram,
     estimate_typical_interval_minutes,
 )
-from ui_components import (
+from ui.components import (
     build_color_map,
     get_mapbox_token,
     render_dashboard,
@@ -144,7 +144,8 @@ def main() -> None:
     'Dashboard créé dans le cadre du projet <a href="https://www.u-bordeaux.fr/universite/notre-strategie/'
     'nos-leviers/cma-competences-et-metiers-davenir/cap-ia" target="_blank"><strong>CAP IA</strong></a>.<br>'
 
-    'Code source sous <a href="https://opensource.org/license/mit" target="_blank">licence MIT</a>.<br>'
+    'Le code source est disponible sur <a href="https://github.com/cap-ia/usecase_movebank_oiseaux_de_mer" target="_blank">GitHub</a> '
+    'sous <a href="https://opensource.org/license/mit" target="_blank">licence MIT</a>.<br>'
 
     'Données : Garthe et al. (2016), <a href="https://doi.org/10.5441/001/1.nk286sc0" target="_blank">'
     '« Terrestrial and Marine Foraging Strategies of an Opportunistic Seabird Species Breeding in the Wadden Sea »</a>, '
@@ -217,7 +218,7 @@ def render_standard_mode(*, filtered: pd.DataFrame, map_data: pd.DataFrame, filt
 
 
 def render_foraging_mode(*, filtered: pd.DataFrame, map_data: pd.DataFrame, data_quality: dict, filters: dict, individual_order: list, color_map: dict, map_config: dict,) -> None:
-    """Calcule et affiche le mode chaleur, DBSCAN et visites de zones."""
+    """Calcule et affiche le mode chaleur, DBSCAN et visites de zones"""
 
     candidates = pd.DataFrame()
     zone_summary = pd.DataFrame()

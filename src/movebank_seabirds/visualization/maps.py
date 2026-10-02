@@ -8,7 +8,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 import config as cfg
-from charts  import improve_axis_spacing
+from visualization.charts  import improve_axis_spacing
 
 
 def _map_center(map_data: pd.DataFrame) -> Dict[str, float]:

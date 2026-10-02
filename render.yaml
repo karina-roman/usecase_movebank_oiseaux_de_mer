@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: mon-application-streamlit
+    name: Trajectoires des oiseaux marins
     runtime: python
     buildCommand: pip install -r requirements.txt
     startCommand: python -m streamlit run streamlit_app_ameliore.py --server.address 0.0.0.0 --server.port $PORT --server.headless true

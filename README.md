@@ -1,6 +1,17 @@
-# Dashboard d’analyse des trajectoires et des zones potentielles de recherche alimentaire des goélands bruns
+<h1 align="center">
+  <a href="https://usecase-oiseaux-de-mer.onrender.com">Dashboard d’analyse des déplacements et de l’alimentation des oiseaux marin</a>
+</h1>
 
-Ce projet est un **dashboard interactif développé avec Streamlit** pour explorer les déplacements de goélands bruns suivis par GPS. Il permet d’étudier les trajectoires individuelles, les distances parcourues, les rythmes horaires, les excursions hors du nid et la signature du mouvement.
+<p align="center">
+<img src=https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white>
+<img src=https://img.shields.io/badge/Streamlit-FF4B4B?logo=streamlit&logoColor=white>
+<img src=https://img.shields.io/badge/Pandas-150458?logo=pandas&logoColor=white>
+<img src=https://img.shields.io/badge/Plotly-3F4F75?logo=plotly&logoColor=white>
+</p>
+
+<hr>
+
+Ce projet est un **dashboard interactif développé avec Streamlit** permettant d’explorer les déplacements de goélands bruns suivis par GPS. L’application est hébergée sur **Render** et accessible directement en cliquant sur le lien intégré au titre de ce README. Elle permet d’analyser les trajectoires individuelles, les distances parcourues, les rythmes d’activité horaires, les excursions effectuées hors du nid ainsi que les principales caractéristiques du mouvement.
 
 Un second mode détecte des **zones potentielles de recherche alimentaire**. Les positions lentes situées hors de la zone du nid sont regroupées spatialement avec l’algorithme DBSCAN. Une carte de chaleur, des indicateurs de réutilisation des zones et une chronologie des visites complètent cette analyse.
 
@@ -34,10 +45,13 @@ Le dashboard utilise le jeu de données suivant :
 
 > Garthe et al. (2016), *Data from: Terrestrial and Marine Foraging Strategies of an Opportunistic Seabird Species Breeding in the Wadden Sea*, Movebank Data Repository. DOI : [10.5441/001/1.nk286sc0](https://doi.org/10.5441/001/1.nk286sc0).
 
-Le fichier CSV n’est pas distribué avec le code. Après l’avoir téléchargé conformément aux conditions de la source, placez-le dans le dossier `data/` avec exactement ce nom :
+
+Le fichier CSV n’est pas distribué avec le code source. Il peut être placé manuellement dans le dossier `data/` après avoir été téléchargé conformément aux conditions d’utilisation de la source, ou récupéré directement depuis le site via une API.  
+
+En cas de téléchargement manuel, placez le fichier dans le dossier `data/` en conservant exactement le nom suivant :
 
 ```text
-FTZ_ Foraging_in_lesser_black-backed_gulls.csv
+FTZ_Foraging_in_lesser_black-backed_gulls.csv
 ```
 
 Les colonnes indispensables sont :
@@ -85,22 +99,44 @@ Une nouvelle visite commence lorsqu’un individu revient dans une zone après p
 
 ```text
 .
-├── app.py
-├── config.py
-├── data_processing.py
-├── movement_analysis.py
-├── foraging_analysis.py
-├── maps.py
-├── charts.py
-├── ui_components.py
-├── data/
-│   └── FTZ_ Foraging_in_lesser_black-backed_gulls.csv
+├── .streamlit/
+│   └── config.toml
+│
+├── src/
+│   └── movebank_seabirds/
+│       ├── app.py
+│       ├── config.py
+│       │
+│       ├── data/
+│       │   └── processing.py
+│       │
+│       ├── analysis/
+│       │   ├── movement.py
+│       │   └── foraging.py
+│       │
+│       ├── visualization/
+│       │   ├── charts.py
+│       │   └── maps.py
+│       │
+│       └── ui/
+│           └── components.py
+│
+├── .gitignore
+├── .python-version
 ├── requirements.txt
-├── pyproject.toml
-├── poetry.lock
+├── render.yaml
 ├── LICENSE
 └── README.md
 ```
+
+Le projet est organisé de manière à séparer la logique de traitement des données, les analyses, les visualisations et l'interface Streamlit.
+
+- `src/movebank_seabirds/data/` : chargement et préparation des données
+- `src/movebank_seabirds/analysis/` : analyses des déplacements et du comportement de recherche alimentaire
+- `src/movebank_seabirds/visualization/` : génération des graphiques et des cartes
+- `src/movebank_seabirds/ui/` : composants de l'interface Streamlit
+- `data/` : données utilisées par l'application
+- `tests/` : tests unitaires des principales fonctions du projet
 
 ### `app.py` - orchestration
 
@@ -218,9 +254,7 @@ Chaque fonction retourne un objet `plotly.graph_objects.Figure` sans l’affiche
 | [Plotly](https://plotly.com/python/) | 5.18 | cartes et graphiques interactifs |
 | [scikit-learn](https://scikit-learn.org/) | 1.3 | clustering DBSCAN des positions candidates |
 
-Les modules `datetime`, `html`, `os`, `pathlib`, `textwrap` et `typing` appartiennent à la bibliothèque standard de Python et ne doivent pas être ajoutés aux dépendances Poetry.
-
-## Installation avec Poetry
+## Installation avec Python
 
 ### 1. Récupérer le projet
 
@@ -249,7 +283,7 @@ data/FTZ_ Foraging_in_lesser_black-backed_gulls.csv
 ### 4. Lancer le dashboard
 
 ```bash
-streamlit run app.py
+streamlit run src/movebank_seabirds/app.py --server.port 8501
 ```
 
 Streamlit affiche ensuite dans le terminal l’adresse locale, généralement :

@@ -1,5 +1,0 @@
-[project]
-name = "dashboard-oiseaux"
-version = "0.1.0"
-description = "Dashboard d’analyse des déplacements de goélands"
-license = "MIT"
